@@ -106,6 +106,70 @@ RUN git clone --recursive -b ${TORCHAUDIO_VERSION} https://github.com/pytorch/au
 
 
 #
+# yolov5
+#
+
+RUN git clone https://github.com/aldrichg9/yolov5.git && \
+    pip3 install --upgrade pip && \
+    cd yolov5 && \
+    pip3 install -r requirements.txt && \
+    cd ../
+    
+#
+# OpenCV
+#
+
+RUN apt-get update && apt-get install -y \ 
+    wget \
+    build-essential \ 
+    cmake \ 
+    git \
+    unzip \ 
+    pkg-config \
+    python-dev \ 
+    python-opencv \ 
+    libopencv-dev \ 
+    # libav-tools  \ 
+    libjpeg-dev \ 
+    libpng-dev \ 
+    libtiff-dev \ 
+    # libjasper-dev \ 
+    libgtk2.0-dev \ 
+    python-numpy \ 
+    python-pycurl \ 
+    libatlas-base-dev \
+    gfortran \
+    webp \ 
+    python-opencv \ 
+    qt5-default \
+    libvtk6-dev \ 
+    ffmpeg \
+    zlib1g-dev 
+
+# Install Open CV - Warning, this takes absolutely forever
+RUN mkdir -p ~/opencv cd ~/opencv && \
+    wget https://github.com/opencv/opencv/archive/4.4.0.zip && \
+    unzip 4.4.0.zip && \
+    rm 4.4.0.zip && \
+    mv opencv-4.4.0 OpenCV && \
+    cd OpenCV && \
+    mkdir build && \ 
+    cd build && \
+    cmake \
+    -DWITH_QT=ON \ 
+    -DWITH_OPENGL=ON \ 
+    -DFORCE_VTK=ON \
+    -DWITH_TBB=ON \
+    -DWITH_GDAL=ON \
+    -DWITH_XINE=ON \
+    -DWITH_FFMPEG=ON \
+    -DBUILD_EXAMPLES=ON .. && \
+    make -j4 && \
+    make install && \ 
+    ldconfig
+    
+    
+#
 # PyCUDA
 #
 ENV PATH="/usr/local/cuda/bin:${PATH}"
