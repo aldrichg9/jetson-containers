@@ -27,16 +27,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 #
 # install prerequisites (many of these are for numpy)
 #
-#RUN apt-get update && \
-#    apt-get install -y --no-install-recommends \
-#            python3-pip \
-#		  python3-dev \
-#		  libopenblas-dev \
-#		  libopenmpi2 \ 
-#           openmpi-bin \
-#           openmpi-common \
-#		  gfortran \
-#    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+            python3-pip \
+		  python3-dev \
+		  libopenblas-dev \
+		  libopenmpi2 \ 
+           openmpi-bin \
+           openmpi-common \
+		  gfortran \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install setuptools Cython wheel
 RUN pip3 install numpy --verbose
